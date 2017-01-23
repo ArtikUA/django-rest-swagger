@@ -679,11 +679,8 @@ class ViewSetMethodIntrospector(BaseMethodIntrospector):
     @property
     def is_array_response(self):
         """ ViewSet.list methods always return array responses """
-        is_array = super(ViewSetMethodIntrospector, self).is_array_response
-        if is_array is False:
-            return False
-        elif is_array or self.method == 'list':
-            return True
+        return (self.method == 'list' or
+                super(ViewSetMethodIntrospector, self).is_array_response)
 
     def get_http_method(self):
         return self.http_method
